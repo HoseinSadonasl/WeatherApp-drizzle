@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sky_blue">#52B6D6</color>
+    <color name="sky_blue_bright">#75C1DD</color>
+    <color name="sun_yellow">#FFB901</color>
+    <color name="sun_yellow_bright">#F4C95A</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="black">#FF000000</color>
+    <color name="grey">#707070</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
