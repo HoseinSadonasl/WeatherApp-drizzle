@@ -11,6 +11,7 @@ class GetCurrentLocation @Inject constructor(
 ) {
     private lateinit var locationManager: LocationManager
 
+
     @SuppressLint("MissingPermission")
     fun getLatLon(): ArrayList<Double> {
         val currentLocation = ArrayList<Double>()

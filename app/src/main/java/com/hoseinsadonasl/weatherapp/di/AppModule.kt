@@ -5,26 +5,29 @@ import com.hoseinsadonasl.weatherapp.other.GetCurrentLocation
 import com.hoseinsadonasl.weatherapp.repository.MainRepository
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+@InstallIn(SingletonComponent::class)
+object AppModule {
 
     @Singleton
     @Provides
     @Named("latitude")
     fun provideLat(
         @ApplicationContext context: Context
-    ): Double = GetCurrentLocation(context).getLatLon()[0]
+    ): String = "33.44" //GetCurrentLocation(context).getLatLon()[0].toString()
 
-    @Singleton
+    @Singleton//هin kuftya chye  baba dashtam test mikrdm fuck akhmmmmmm
     @Provides
     @Named("longitude")
     fun providelon(
         @ApplicationContext context: Context
-    ): Double = GetCurrentLocation(context).getLatLon()[1]
+    ): String = "94.04" //GetCurrentLocation(context).getLatLon()[1].toString()
 
     @Singleton
     @Provides

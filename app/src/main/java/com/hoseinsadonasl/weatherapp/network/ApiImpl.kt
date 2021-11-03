@@ -11,9 +11,8 @@ class ApiImpl @Inject constructor(
     @Named("latitude") private val lat: String,
     @Named("longitude") private val lon: String,
     @Named("exclude") private val exclude: String,
-    @Named("appid") private val appId: String
 ) : ApiHelper {
     override suspend fun getWeatherApi():  Response<Weather> {
-       return weatherApi.getWeather(lat, lon, exclude, appId)
+       return weatherApi.getWeather(lat, lon, exclude)
     }
 }

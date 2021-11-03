@@ -26,7 +26,6 @@ object NetworkModule {
     @Named("base_url")
     fun provideBaseUrl() = BASE_URL
 
-
     @Singleton
     @Provides
     @Named("appid")
@@ -38,7 +37,6 @@ object NetworkModule {
         .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-
 
     @Singleton
     @Provides

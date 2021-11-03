@@ -20,6 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
+private const val TAG = "MainFragment"
+
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.layout_fragment_main), EasyPermissions.PermissionCallbacks {
 
@@ -28,8 +30,10 @@ class MainFragment : Fragment(R.layout.layout_fragment_main), EasyPermissions.Pe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestPermission()
-        getLocation()
 
+        viewModel.currentWeather.observe(viewLifecycleOwner, {
+            //Log.d(TAG, "onViewCreated: ${it.temp}")
+        })
     }
 
     private fun requestPermission() {
@@ -45,12 +49,6 @@ class MainFragment : Fragment(R.layout.layout_fragment_main), EasyPermissions.Pe
             )
     }
 
-
-    @SuppressLint("MissingPermission")
-    private fun getLocation() {
-
-    }
-
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
@@ -58,7 +56,6 @@ class MainFragment : Fragment(R.layout.layout_fragment_main), EasyPermissions.Pe
             requestPermission()
         }
     }
-
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
 
