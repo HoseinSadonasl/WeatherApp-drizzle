@@ -6,6 +6,7 @@
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/activity_main.xml" value="0.20625" />
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/layout_fragment_detail.xml" value="0.2234375" />
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/layout_fragment_main.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/layout_main_recycler_view_list_item.xml" value="0.2234375" />
       </map>
     </option>
   </component>

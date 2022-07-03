@@ -1,8 +1,11 @@
 package com.hoseinsadonasl.weatherapp.di
 
+import android.annotation.SuppressLint
 import android.content.Context
-import com.hoseinsadonasl.weatherapp.other.GetCurrentLocation
-import com.hoseinsadonasl.weatherapp.repository.MainRepository
+import android.location.Location
+import android.location.LocationManager
+import android.util.Log
+import com.hoseinsadonasl.weatherapp.other.LocationUtility
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,17 +20,32 @@ object AppModule {
 
     @Singleton
     @Provides
-    @Named("latitude")
-    fun provideLat(
-        @ApplicationContext context: Context
-    ): String = "33.44" //GetCurrentLocation(context).getLatLon()[0].toString()
+    @Named("locationManager")
+    fun provideLocationManager(@ApplicationContext context: Context): LocationManager =
+        context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-    @Singleton//هin kuftya chye  baba dashtam test mikrdm fuck akhmmmmmm
+    @SuppressLint("MissingPermission")
+    @Singleton
     @Provides
-    @Named("longitude")
-    fun providelon(
+    @Named("location")
+    fun provideLocation(
+        @Named("locationManager") locationManager: LocationManager,
         @ApplicationContext context: Context
-    ): String = "94.04" //GetCurrentLocation(context).getLatLon()[1].toString()
+    ): ArrayList<Double> {
+        val latLon = ArrayList<Double>()
+        if (LocationUtility.hasPermission(context)) {
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                1000,
+                5f
+            ) { location ->
+                Log.d("LOCATIONTAG", "onLocationChanged: ${location.latitude} ]")
+                latLon.add(location.latitude)
+                latLon.add(location.longitude)
+            }
+        }
+        return latLon
+    }
 
     @Singleton
     @Provides
