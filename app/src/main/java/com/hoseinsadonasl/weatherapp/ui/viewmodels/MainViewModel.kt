@@ -27,9 +27,9 @@ class MainViewModel @Inject constructor(
     private val repository: MainRepository,
 ) : ViewModel() {
 
-    private var _currentWeather = MutableLiveData<Current>()
-    val currentWeather: LiveData<Current>
-        get() = _currentWeather
+    private var _weather = MutableLiveData<Weather>()
+    val weather: LiveData<Weather>
+        get() = _weather
 
     private var _dailytWeather = MutableLiveData<List<Daily>>()
     val dailytWeather: LiveData<List<Daily>>
@@ -84,7 +84,7 @@ class MainViewModel @Inject constructor(
         CoroutineScope(IO).launch {
             delay(5000)
             repository.getWeather().collect {
-                _currentWeather.postValue(it.body()?.current)
+                _weather.postValue(it.body())
                 Log.d(TAG, "getDailyWeather: ${it.body()?.current}")
             }
         }

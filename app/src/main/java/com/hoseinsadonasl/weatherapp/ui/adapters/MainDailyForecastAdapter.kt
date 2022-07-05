@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hoseinsadonasl.weatherapp.databinding.LayoutMainRecyclerViewListItemBinding
 import com.hoseinsadonasl.weatherapp.models.Daily
 
-class MainAdapter : ListAdapter<Daily, MainAdapter.ViewHolder>(DiffUtilCallBack) {
+class MainDailyForecastAdapter : ListAdapter<Daily, MainDailyForecastAdapter.ViewHolder>(DailyAdapterDiffUtilCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LayoutMainRecyclerViewListItemBinding.inflate(
@@ -20,7 +20,7 @@ class MainAdapter : ListAdapter<Daily, MainAdapter.ViewHolder>(DiffUtilCallBack)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.textView5.text = getItem(position).temp.toString()
+        holder.binding.textView5.text = getItem(position).temp.day.toString()
         holder.binding.executePendingBindings()
     }
 
@@ -29,7 +29,7 @@ class MainAdapter : ListAdapter<Daily, MainAdapter.ViewHolder>(DiffUtilCallBack)
 
 }
 
-object DiffUtilCallBack : DiffUtil.ItemCallback<Daily>() {
+object DailyAdapterDiffUtilCallBack : DiffUtil.ItemCallback<Daily>() {
     override fun areItemsTheSame(oldItem: Daily, newItem: Daily): Boolean {
         return oldItem.dt == newItem.dt
     }

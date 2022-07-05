@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,21 +16,22 @@ import com.hoseinsadonasl.weatherapp.R
 import com.hoseinsadonasl.weatherapp.databinding.LayoutFragmentMainBinding
 import com.hoseinsadonasl.weatherapp.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
 import com.hoseinsadonasl.weatherapp.other.LocationUtility
-import com.hoseinsadonasl.weatherapp.ui.adapters.MainAdapter
+import com.hoseinsadonasl.weatherapp.ui.adapters.MainDailyForecastAdapter
+import com.hoseinsadonasl.weatherapp.ui.adapters.MainHourlyForecastAdapter
 import com.hoseinsadonasl.weatherapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
-private const val TAG = "MainFragment"
 
 @AndroidEntryPoint
 class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
-    private val viewModel: MainViewModel by viewModels()
-
     private lateinit var binding: LayoutFragmentMainBinding
-    private lateinit var adapter: MainAdapter
+    private lateinit var dailyForecastAdapter: MainDailyForecastAdapter
+    private lateinit var hourlyForecastAdapter: MainHourlyForecastAdapter
+
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,28 +50,88 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestPermission()
-        setupRecyvlerView()
+        setupHourlyForecastRecyvlerView()
+        setupDailyForecastRecyvlerView()
         observeData()
     }
 
-    private fun setupRecyvlerView() {
-        adapter = MainAdapter().apply {
+    private fun setupHourlyForecastRecyvlerView() {
+        hourlyForecastAdapter = MainHourlyForecastAdapter().apply {
+
+    }
+        val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            .apply { binding.hourlyRv.layoutManager = this }
+        DividerItemDecoration(requireContext(), layoutManager.orientation)
+            .apply { binding.hourlyRv.addItemDecoration(this) }
+        binding.hourlyRv.adapter = hourlyForecastAdapter
+    }
+
+    private fun setupDailyForecastRecyvlerView() {
+        dailyForecastAdapter = MainDailyForecastAdapter().apply {
             
         }
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             .apply { binding.daysRv.layoutManager = this }
         DividerItemDecoration(requireContext(), layoutManager.orientation)
             .apply { binding.daysRv.addItemDecoration(this) }
-        binding.daysRv.adapter = adapter
+        binding.daysRv.adapter = dailyForecastAdapter
     }
 
     private fun observeData() {
-        viewModel.currentWeather.observe(viewLifecycleOwner, {
+        viewModel.weather.observe(viewLifecycleOwner) { weather ->
+            binding.apply {
+                setBackImg(
+                    weather.current.weather[0].main,
+                    weather.current.sunset,
+                    weather.current.sunrise
+                )
+                tempTv.text = ((weather.current.temp.toInt() - 273).toString() + "°")
+                locationNameTv.text = weather.timezone
+                uvTv.text = "UV Index: " + weather.current.uvi.toString()
+                humidityTv.text = "Humidity: " + weather.current.humidity.toString() + "%"
+                visibilityTv.text =
+                    "Visibility: " + (weather.current.visibility / 1000).toString() + "Km"
+                //var windSpeed = if ()
+                windSpeedTv.text =
+                    "Wind: " + (weather.current.wind_speed.toString() + "Km/h")
+                weatherStatusDescriptionTv.text = weather.current.weather[0].description
+                weatherStatusMainTv.text = "Status: " + weather.current.weather[0].main
+                hectopascalTv.text = "Pressure: " + weather.current.pressure.toString()
+                dewPointTv.text = "Dew point: " + weather.current.dew_poDouble.toString()
+            }
+            hourlyForecastAdapter.submitList(weather.hourly)
+        }
+        viewModel.dailytWeather.observe(viewLifecycleOwner) {
+            dailyForecastAdapter.submitList(it)
+        }
+    }
 
-        })
-        viewModel.dailytWeather.observe(viewLifecycleOwner, {
-            adapter.submitList(it)
-        })
+    private fun setBackImg(status: String, sunset: Double, sunrise: Double) {
+        val time = System.currentTimeMillis()
+        var imgRes = R.drawable.sunny
+        when (status) {
+            "Thunderstorm" -> imgRes = R.drawable.thunder_and_lightning
+            "Drizzle" -> imgRes = R.drawable.cloudy
+            "Rain" -> {
+                if (time >= sunset && time <= sunrise) {
+                    imgRes = R.drawable.rainy_night
+                } else {
+                    imgRes = R.drawable.rainy
+                }
+            }
+            "Snow" -> imgRes = R.drawable.rainy
+            "Clear" -> {
+                if (time >= sunset && time <= sunrise) {
+                    imgRes = R.drawable.night
+                } else {
+                    imgRes = R.drawable.sunny
+                }
+            }
+            "Clouds" -> imgRes = R.drawable.cloudy
+            "Haze", "Fog" -> imgRes = R.drawable.cloudy
+            else -> imgRes = R.drawable.sunny
+        }
+        binding.weatherImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), imgRes))
     }
 
 
