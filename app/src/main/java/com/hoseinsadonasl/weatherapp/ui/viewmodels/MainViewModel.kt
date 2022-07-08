@@ -4,19 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.hoseinsadonasl.weatherapp.models.Current
 import com.hoseinsadonasl.weatherapp.models.Daily
 import com.hoseinsadonasl.weatherapp.models.Weather
 import com.hoseinsadonasl.weatherapp.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -75,6 +70,9 @@ class MainViewModel @Inject constructor(
     val icon: LiveData<String>
         get() = _icon
 
+    private var _progressBarHide = MutableLiveData<Boolean>()
+    val progressBarHide = _progressBarHide
+
     init {
         getCurrentWeather()
         getDailyWeather()
@@ -85,9 +83,16 @@ class MainViewModel @Inject constructor(
             delay(5000)
             repository.getWeather().collect {
                 _weather.postValue(it.body())
+                if (it.code() == 200) {
+                    hideProgressBars()
+                }
                 Log.d(TAG, "getDailyWeather: ${it.body()?.current}")
             }
         }
+    }
+
+    private fun hideProgressBars() {
+        _progressBarHide.value = true
     }
 
     private fun getDailyWeather() {

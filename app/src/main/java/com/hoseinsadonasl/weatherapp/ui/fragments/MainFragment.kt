@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -56,29 +57,24 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun setupHourlyForecastRecyvlerView() {
-        hourlyForecastAdapter = MainHourlyForecastAdapter().apply {
-
-    }
-        val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-            .apply { binding.hourlyRv.layoutManager = this }
-        DividerItemDecoration(requireContext(), layoutManager.orientation)
-            .apply { binding.hourlyRv.addItemDecoration(this) }
-        binding.hourlyRv.adapter = hourlyForecastAdapter
+        hourlyForecastAdapter = MainHourlyForecastAdapter()
+        binding.hourlyRv.let { recyclerView ->
+            DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
+                .apply { binding.hourlyRv.addItemDecoration(this) }
+            recyclerView.adapter = hourlyForecastAdapter
+        }
     }
 
     private fun setupDailyForecastRecyvlerView() {
-        dailyForecastAdapter = MainDailyForecastAdapter().apply {
-            
-        }
-        val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-            .apply { binding.daysRv.layoutManager = this }
-        DividerItemDecoration(requireContext(), layoutManager.orientation)
-            .apply { binding.daysRv.addItemDecoration(this) }
+        dailyForecastAdapter = MainDailyForecastAdapter()
         binding.daysRv.adapter = dailyForecastAdapter
     }
 
     private fun observeData() {
         viewModel.weather.observe(viewLifecycleOwner) { weather ->
+            binding.tempPb.visibility = GONE
+            binding.dailyRvPb.visibility = GONE
+            binding.hourlyRvPb.visibility = GONE
             binding.apply {
                 setBackImg(
                     weather.current.weather[0].main,
@@ -86,6 +82,9 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                     weather.current.sunrise
                 )
                 tempTv.text = ((weather.current.temp.toInt() - 273).toString() + "°")
+                tempMaxMinTv.text = "Max/Min: " +
+                    ((weather.daily.get(0).temp.max.toInt() - 273).toString() + "°/" +
+                            (weather.daily.get(0).temp.min.toInt() - 273).toString() + "°")
                 locationNameTv.text = weather.timezone
                 uvTv.text = "UV Index: " + weather.current.uvi.toString()
                 humidityTv.text = "Humidity: " + weather.current.humidity.toString() + "%"

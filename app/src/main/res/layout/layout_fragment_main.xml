@@ -97,7 +97,7 @@
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/visibility_tv"
@@ -112,7 +112,7 @@
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/dew_point_tv"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -128,7 +128,7 @@
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/humidity_tv"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +143,7 @@
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/uv_tv"
@@ -158,7 +158,7 @@
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/wind_speed_tv"
@@ -169,31 +169,31 @@
             android:id="@+id/weather_status_description_tv"
             android:layout_width="96dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/weather_status_main_tv"
-            app:layout_constraintTop_toBottomOf="@+id/location_name_tv"
+            app:layout_constraintStart_toEndOf="@+id/temp_max_min_tv"
+            app:layout_constraintTop_toBottomOf="@+id/weather_status_main_tv"
             tools:text="Tehran" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/weather_status_main_tv"
+            android:id="@+id/temp_max_min_tv"
             android:layout_width="96dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/weather_status_description_tv"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/location_name_tv"
+            app:layout_constraintTop_toBottomOf="@+id/weather_status_main_tv"
             tools:text="Tehran" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -204,18 +204,19 @@
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
-            android:textSize="10sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/hectopascal_tv"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/weather_status_main_tv"
+            app:layout_constraintTop_toBottomOf="@+id/temp_max_min_tv"
             tools:text="Tehran" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/hourly_parent"
             android:layout_width="0dp"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
+            tools:layout_height="100dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
@@ -245,8 +246,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -261,7 +262,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/card_gradient"
@@ -295,10 +296,59 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/daily_forecast_tv" />
+                app:layout_constraintTop_toBottomOf="@+id/daily_forecast_tv"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/temp_pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/weather_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/hourly_Rv_pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/hourly_parent"
+            app:layout_constraintEnd_toEndOf="@+id/hourly_parent"
+            app:layout_constraintStart_toStartOf="@+id/hourly_parent"
+            app:layout_constraintTop_toTopOf="@+id/hourly_parent" />
+
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/daily_Rv_pb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:indicatorColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/weather_status_main_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="TextView"
+            android:fontFamily="@font/montserrat_extralight"
+            android:textColor="@color/text_white"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/location_name_tv"
+            app:layout_constraintStart_toStartOf="@+id/location_name_tv"
+            app:layout_constraintTop_toBottomOf="@+id/location_name_tv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

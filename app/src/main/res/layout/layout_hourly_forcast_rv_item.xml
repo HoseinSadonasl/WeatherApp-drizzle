@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
+        android:paddingHorizontal="4dp"
         tools:background="@color/sky_blue">
 
         <com.google.android.material.textview.MaterialTextView

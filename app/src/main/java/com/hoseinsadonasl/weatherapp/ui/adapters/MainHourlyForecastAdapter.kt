@@ -24,7 +24,7 @@ class MainHourlyForecastAdapter :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.tempTv.text = (getItem(position).temp.toInt() - 273).toString() + "°"
         holder.binding.statusTv.text = getItem(position).weather[0].description
-        var time = formatTime(getItem(position).dt.toLong())
+        val time = formatTime(getItem(position).dt.toLong())
         holder.binding.timeTv.text = time
         holder.binding.executePendingBindings()
     }
