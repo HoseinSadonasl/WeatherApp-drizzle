@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hoseinsadonasl.weatherapp.R
 import com.hoseinsadonasl.weatherapp.databinding.LayoutFragmentMainBinding
@@ -23,14 +22,21 @@ import com.hoseinsadonasl.weatherapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
-
+import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private lateinit var binding: LayoutFragmentMainBinding
-    private lateinit var dailyForecastAdapter: MainDailyForecastAdapter
-    private lateinit var hourlyForecastAdapter: MainHourlyForecastAdapter
+
+    @Inject
+    @Named("MainDailyForecastAdapter")
+    lateinit var dailyForecastAdapter: MainDailyForecastAdapter
+
+    @Inject
+    @Named("MainHourlyForecastAdapter")
+    lateinit var hourlyForecastAdapter: MainHourlyForecastAdapter
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -57,17 +63,22 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
     private fun setupHourlyForecastRecyvlerView() {
-        hourlyForecastAdapter = MainHourlyForecastAdapter()
         binding.hourlyRv.let { recyclerView ->
-            DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
-                .apply { binding.hourlyRv.addItemDecoration(this) }
             recyclerView.adapter = hourlyForecastAdapter
         }
     }
 
     private fun setupDailyForecastRecyvlerView() {
-        dailyForecastAdapter = MainDailyForecastAdapter()
-        binding.daysRv.adapter = dailyForecastAdapter
+        val div = ContextCompat.getDrawable(requireContext(), R.drawable.divider_rv)
+        binding.daysRv.let { recyclerView ->
+            DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
+                .apply {
+                    binding.daysRv.addItemDecoration(this)
+                    this.setDrawable(div!!)
+
+                }
+            recyclerView.adapter = dailyForecastAdapter
+        }
     }
 
     private fun observeData() {
@@ -90,7 +101,6 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 humidityTv.text = "Humidity: " + weather.current.humidity.toString() + "%"
                 visibilityTv.text =
                     "Visibility: " + (weather.current.visibility / 1000).toString() + "Km"
-                //var windSpeed = if ()
                 windSpeedTv.text =
                     "Wind: " + (weather.current.wind_speed.toString() + "Km/h")
                 weatherStatusDescriptionTv.text = weather.current.weather[0].description
@@ -98,36 +108,34 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 hectopascalTv.text = "Pressure: " + weather.current.pressure.toString()
                 dewPointTv.text = "Dew point: " + weather.current.dew_poDouble.toString()
             }
+            dailyForecastAdapter.submitList(weather.daily)
             hourlyForecastAdapter.submitList(weather.hourly)
-        }
-        viewModel.dailytWeather.observe(viewLifecycleOwner) {
-            dailyForecastAdapter.submitList(it)
         }
     }
 
     private fun setBackImg(status: String, sunset: Double, sunrise: Double) {
-        val time = System.currentTimeMillis()
+        val currentTimeInMillis = viewModel.currentTimeInMillis
         var imgRes = R.drawable.sunny
         when (status) {
-            "Thunderstorm" -> imgRes = R.drawable.thunder_and_lightning
-            "Drizzle" -> imgRes = R.drawable.cloudy
+            "Thunderstorm" -> imgRes = R.drawable.thunderandlightning
+            "Drizzle" -> imgRes = R.drawable.drizzle
             "Rain" -> {
-                if (time >= sunset && time <= sunrise) {
-                    imgRes = R.drawable.rainy_night
+                if (currentTimeInMillis >= sunset.toLong() * 1000 && currentTimeInMillis <= sunrise.toLong() * 1000) {
+                    imgRes = R.drawable.rainynight
                 } else {
                     imgRes = R.drawable.rainy
                 }
             }
-            "Snow" -> imgRes = R.drawable.rainy
+            "Snow" -> imgRes = R.drawable.snow
             "Clear" -> {
-                if (time >= sunset && time <= sunrise) {
-                    imgRes = R.drawable.night
-                } else {
+                if (currentTimeInMillis >= sunset.toLong() * 1000 && currentTimeInMillis <= sunrise.toLong() * 1000) {
                     imgRes = R.drawable.sunny
+                } else {
+                    imgRes = R.drawable.night
                 }
             }
-            "Clouds" -> imgRes = R.drawable.cloudy
-            "Haze", "Fog" -> imgRes = R.drawable.cloudy
+            "Clouds" -> imgRes = R.drawable.clouds
+            "Haze", "Fog" -> imgRes = R.drawable.fog
             else -> imgRes = R.drawable.sunny
         }
         binding.weatherImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), imgRes))

@@ -1,7 +1,5 @@
 package com.hoseinsadonasl.weatherapp.ui.adapters
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,10 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hoseinsadonasl.weatherapp.databinding.LayoutMainRecyclerViewListItemBinding
 import com.hoseinsadonasl.weatherapp.formatDailyAdapterTime
-import com.hoseinsadonasl.weatherapp.formatTime
 import com.hoseinsadonasl.weatherapp.models.Daily
 
-class MainDailyForecastAdapter : ListAdapter<Daily, MainDailyForecastAdapter.ViewHolder>(DailyAdapterDiffUtilCallBack) {
+class MainDailyForecastAdapter :
+    ListAdapter<Daily, MainDailyForecastAdapter.ViewHolder>(DailyAdapterDiffUtilCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LayoutMainRecyclerViewListItemBinding.inflate(
@@ -23,7 +21,6 @@ class MainDailyForecastAdapter : ListAdapter<Daily, MainDailyForecastAdapter.Vie
         return ViewHolder(binding)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.dateTv.text = formatDailyAdapterTime(getItem(position).dt.toInt().toLong())
         holder.binding.statusTv.text = getItem(position).weather[0].description
