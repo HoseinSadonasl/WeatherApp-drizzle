@@ -12,5 +12,4 @@ fun formatTime(timeMillis: Long): String {
 @SuppressLint("SimpleDateFormat")
 fun formatDailyAdapterTime(timeMillis: Long): String {
     return SimpleDateFormat("EEE, MMM d").format(timeMillis * 1000).toString()
-
 }

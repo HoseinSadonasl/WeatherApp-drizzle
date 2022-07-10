@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.RequestManager
 import com.hoseinsadonasl.weatherapp.R
 import com.hoseinsadonasl.weatherapp.databinding.LayoutFragmentMainBinding
 import com.hoseinsadonasl.weatherapp.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
@@ -37,6 +38,10 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     @Inject
     @Named("MainHourlyForecastAdapter")
     lateinit var hourlyForecastAdapter: MainHourlyForecastAdapter
+
+    @Inject
+    @Named("glideProvider")
+    lateinit var glide: RequestManager
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -115,30 +120,40 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun setBackImg(status: String, sunset: Double, sunrise: Double) {
         val currentTimeInMillis = viewModel.currentTimeInMillis
-        var imgRes = R.drawable.sunny
+        val imageLink: String = imageAdress(status, currentTimeInMillis, sunset, sunrise)
+        glide.load(imageLink).into(binding.weatherImg)
+    }
+
+    fun imageAdress(
+        status: String,
+        currentTimeInMillis: Long,
+        sunset: Double,
+        sunrise: Double
+    ): String {
+        val imgRes: String
         when (status) {
-            "Thunderstorm" -> imgRes = R.drawable.thunderandlightning
-            "Drizzle" -> imgRes = R.drawable.drizzle
+            "Thunderstorm" -> imgRes = getString(R.string.thunderandlightning)
+            "Drizzle" -> imgRes = getString(R.string.drizzle)
             "Rain" -> {
                 if (currentTimeInMillis >= sunset.toLong() * 1000 && currentTimeInMillis <= sunrise.toLong() * 1000) {
-                    imgRes = R.drawable.rainynight
+                    imgRes = getString(R.string.rainynight)
                 } else {
-                    imgRes = R.drawable.rainy
+                    imgRes = getString(R.string.rainy)
                 }
             }
-            "Snow" -> imgRes = R.drawable.snow
+            "Snow" -> imgRes = getString(R.string.snow)
             "Clear" -> {
                 if (currentTimeInMillis >= sunset.toLong() * 1000 && currentTimeInMillis <= sunrise.toLong() * 1000) {
-                    imgRes = R.drawable.sunny
+                    imgRes = getString(R.string.sunny)
                 } else {
-                    imgRes = R.drawable.night
+                    imgRes = getString(R.string.night)
                 }
             }
-            "Clouds" -> imgRes = R.drawable.clouds
-            "Haze", "Fog" -> imgRes = R.drawable.fog
-            else -> imgRes = R.drawable.sunny
+            "Clouds" -> imgRes = getString(R.string.clouds)
+            "Haze", "Fog" -> imgRes = getString(R.string.fog)
+            else -> imgRes = getString(R.string.sunny)
         }
-        binding.weatherImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), imgRes))
+        return imgRes
     }
 
 

@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+
+    <!--images links-->
+    <string name="thunderandlightning">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/thunderandlightning.png</string>
+    <string name="sunny">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/sunny.png</string>
+    <string name="snow">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/snow.png</string>
+    <string name="rainynight">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/rainynight.png</string>
+    <string name="rainy">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/rainy.png</string>
+    <string name="night">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/night.png</string>
+    <string name="mostlycloudy">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/mostlycloudy.png</string>
+    <string name="fog">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/fog.png</string>
+    <string name="drizzle">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/drizzle.png</string>
+    <string name="cloudynight">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/cloudynight.png</string>
+    <string name="clouds">https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp/master/Images/clouds.png</string>
+
 </resources>
