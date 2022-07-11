@@ -27,7 +27,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
-class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
+class MainFragment : Fragment(){
 
     private lateinit var binding: LayoutFragmentMainBinding
 
@@ -61,7 +61,6 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requestPermission()
         setupHourlyForecastRecyvlerView()
         setupDailyForecastRecyvlerView()
         observeData()
@@ -120,11 +119,11 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     private fun setBackImg(status: String, sunset: Double, sunrise: Double) {
         val currentTimeInMillis = viewModel.currentTimeInMillis
-        val imageLink: String = imageAdress(status, currentTimeInMillis, sunset, sunrise)
-        glide.load(imageLink).into(binding.weatherImg)
+        val imageUrl: String = imageUrl(status, currentTimeInMillis, sunset, sunrise)
+        glide.load(imageUrl).into(binding.weatherImg)
     }
 
-    fun imageAdress(
+    fun imageUrl(
         status: String,
         currentTimeInMillis: Long,
         sunset: Double,
@@ -157,37 +156,6 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
 
-    private fun requestPermission() {
-        if (LocationUtility.hasPermission(requireContext())) {
-            return
-        }
-        EasyPermissions.requestPermissions(
-            this,
-            "Accept location permission to use the app",
-            REQUEST_CODE_LOCATION_PERMISSION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-    }
-
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            AppSettingsDialog.Builder(this).build().show()
-        } else {
-            requestPermission()
-        }
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {}
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-    }
 
 
 }

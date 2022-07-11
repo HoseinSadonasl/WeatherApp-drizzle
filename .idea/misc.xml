@@ -6,12 +6,15 @@
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/drawable/app_bar_gradient.xml" value="0.1825" />
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/drawable/card_gradient.xml" value="0.23" />
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/drawable/divider_rv.xml" value="0.2055" />
+        <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.146" />
+        <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.146" />
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/activity_main.xml" value="0.20625" />
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/daily_forcast_rv_item.xml" value="0.8" />
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/layout_fragment_detail.xml" value="0.176" />
-        <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/layout_fragment_main.xml" value="0.2" />
+        <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/layout_fragment_main.xml" value="0.536" />
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/layout_hourly_forcast_rv_item.xml" value="0.536" />
         <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/layout_main_recycler_view_list_item.xml" value="0.536" />
+        <entry key="..\:/AndroidStudioProjects/WeatherApp/app/src/main/res/layout/splash_fragment_layout.xml" value="0.21927083333333333" />
       </map>
     </option>
   </component>

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.hoseinsadonasl.weatherapp.ui.fragments.MainFragment"
-        android:label="MainFragment" >
-        <action
-            android:id="@+id/action_mainFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
+        android:label="MainFragment"
+        tools:layout="@layout/layout_fragment_main"/>
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.hoseinsadonasl.weatherapp.ui.fragments.DetailFragment"
-        android:label="DetailFragment" />
+        android:id="@+id/splashFragment"
+        android:name="com.hoseinsadonasl.weatherapp.ui.fragments.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/splash_fragment_layout">
+        <action
+            android:id="@+id/action_splashFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>

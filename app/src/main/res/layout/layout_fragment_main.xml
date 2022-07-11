@@ -25,7 +25,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
@@ -49,13 +49,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/weather_app_tv"
+                app:layout_constraintEnd_toStartOf="@+id/weather_app_tv"
+                app:layout_constraintTop_toTopOf="@+id/weather_app_tv"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/ic_drizzle" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/weather_app_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/montserrat_extralight"
-                android:text="WeatherApp"
+                android:text="Drizzle"
                 android:textColor="@color/text_white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -90,9 +100,10 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/dew_point_tv"
-            android:layout_width="96dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="48dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
@@ -105,8 +116,9 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/visibility_tv"
-            android:layout_width="96dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
@@ -121,8 +133,9 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/uv_tv"
-            android:layout_width="96dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
@@ -136,9 +149,10 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/humidity_tv"
-            android:layout_width="96dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="48dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
@@ -151,9 +165,10 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/hectopascal_tv"
-            android:layout_width="96dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="48dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
@@ -166,9 +181,10 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/weather_status_description_tv"
-            android:layout_width="96dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="48dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
             android:textColor="@color/text_white"
@@ -181,8 +197,9 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/temp_max_min_tv"
-            android:layout_width="96dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
@@ -197,8 +214,9 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/wind_speed_tv"
-            android:layout_width="96dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_extralight"
             android:textAlignment="viewStart"
@@ -215,7 +233,6 @@
             android:id="@+id/hourly_parent"
             android:layout_width="0dp"
             android:layout_height="100dp"
-            tools:layout_height="100dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
@@ -223,7 +240,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/visibility_tv">
+            app:layout_constraintTop_toBottomOf="@+id/visibility_tv"
+            tools:layout_height="100dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/hourly_forecast_tv"
@@ -341,13 +359,13 @@
             android:id="@+id/weather_status_main_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="TextView"
             android:fontFamily="@font/montserrat_extralight"
             android:textColor="@color/text_white"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/location_name_tv"
             app:layout_constraintStart_toStartOf="@+id/location_name_tv"
-            app:layout_constraintTop_toBottomOf="@+id/location_name_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/location_name_tv"
+            tools:text="TextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

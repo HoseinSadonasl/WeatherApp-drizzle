@@ -7,6 +7,7 @@ import android.content.Context
 import android.location.Location
 import android.location.LocationManager
 import android.util.Log
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.hoseinsadonasl.weatherapp.other.Constants
 import com.hoseinsadonasl.weatherapp.other.LocationUtility
