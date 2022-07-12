@@ -326,6 +326,7 @@
             android:layout_height="wrap_content"
             android:indeterminate="true"
             app:indicatorColor="@color/white"
+            app:trackThickness="1dp"
             app:layout_constraintBottom_toBottomOf="@+id/weather_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -338,6 +339,7 @@
             android:layout_height="wrap_content"
             android:indeterminate="true"
             app:indicatorColor="@color/white"
+            app:trackThickness="1dp"
             app:layout_constraintBottom_toBottomOf="@+id/hourly_parent"
             app:layout_constraintEnd_toEndOf="@+id/hourly_parent"
             app:layout_constraintStart_toStartOf="@+id/hourly_parent"
@@ -350,6 +352,7 @@
             android:layout_height="wrap_content"
             android:indeterminate="true"
             app:indicatorColor="@color/white"
+            app:trackThickness="1dp"
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
@@ -362,10 +365,29 @@
             android:fontFamily="@font/montserrat_extralight"
             android:textColor="@color/text_white"
             android:textSize="12sp"
+            app:trackThickness="1dp"
             app:layout_constraintEnd_toEndOf="@+id/location_name_tv"
             app:layout_constraintStart_toStartOf="@+id/location_name_tv"
             app:layout_constraintTop_toBottomOf="@+id/location_name_tv"
             tools:text="TextView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            app:icon="@drawable/ic_baseline_refresh_24"
+            app:iconGravity="textEnd"
+            app:iconPadding="0dp"
+            app:iconTint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/weather_status_main_tv"
+            app:layout_constraintEnd_toStartOf="@+id/location_name_tv"
+            app:layout_constraintTop_toBottomOf="@+id/temp_tv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

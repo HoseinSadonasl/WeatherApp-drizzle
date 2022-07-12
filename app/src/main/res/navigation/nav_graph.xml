@@ -9,7 +9,11 @@
         android:id="@+id/mainFragment"
         android:name="com.hoseinsadonasl.weatherapp.ui.fragments.MainFragment"
         android:label="MainFragment"
-        tools:layout="@layout/layout_fragment_main"/>
+        tools:layout="@layout/layout_fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_splashFragment"
+            app:popUpTo="@id/splashFragment" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.hoseinsadonasl.weatherapp.ui.fragments.SplashFragment"

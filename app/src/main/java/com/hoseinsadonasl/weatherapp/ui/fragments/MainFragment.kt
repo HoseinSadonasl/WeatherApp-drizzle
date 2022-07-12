@@ -2,10 +2,12 @@ package com.hoseinsadonasl.weatherapp.ui.fragments
 
 import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -21,6 +23,10 @@ import com.hoseinsadonasl.weatherapp.ui.adapters.MainDailyForecastAdapter
 import com.hoseinsadonasl.weatherapp.ui.adapters.MainHourlyForecastAdapter
 import com.hoseinsadonasl.weatherapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
@@ -44,6 +50,18 @@ class MainFragment : Fragment(){
     lateinit var glide: RequestManager
 
     private val viewModel: MainViewModel by viewModels()
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finishAffinity()
+            }
+        })
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,13 +118,11 @@ class MainFragment : Fragment(){
                 tempMaxMinTv.text = "Max/Min: " +
                     ((weather.daily.get(0).temp.max.toInt() - 273).toString() + "°/" +
                             (weather.daily.get(0).temp.min.toInt() - 273).toString() + "°")
-                locationNameTv.text = weather.timezone
+                locationNameTv.text = weather.timezone.substringAfter("/")
                 uvTv.text = "UV Index: " + weather.current.uvi.toString()
-                humidityTv.text = "Humidity: " + weather.current.humidity.toString() + "%"
-                visibilityTv.text =
-                    "Visibility: " + (weather.current.visibility / 1000).toString() + "Km"
-                windSpeedTv.text =
-                    "Wind: " + (weather.current.wind_speed.toString() + "Km/h")
+                humidityTv.text = "Humidity: " + weather.current.humidity.toInt().toString() + "%"
+                visibilityTv.text = "Visibility: " + (weather.current.visibility / 1000).toString() + "Km"
+                windSpeedTv.text = "Wind: " + (weather.current.wind_speed.toString() + "Km/h")
                 weatherStatusDescriptionTv.text = weather.current.weather[0].description
                 weatherStatusMainTv.text = "Status: " + weather.current.weather[0].main
                 hectopascalTv.text = "Pressure: " + weather.current.pressure.toString()
@@ -143,9 +159,9 @@ class MainFragment : Fragment(){
             "Snow" -> imgRes = getString(R.string.snow)
             "Clear" -> {
                 if (currentTimeInMillis >= sunset.toLong() * 1000 && currentTimeInMillis <= sunrise.toLong() * 1000) {
-                    imgRes = getString(R.string.sunny)
-                } else {
                     imgRes = getString(R.string.night)
+                } else {
+                    imgRes = getString(R.string.sunny)
                 }
             }
             "Clouds" -> imgRes = getString(R.string.clouds)
@@ -154,8 +170,5 @@ class MainFragment : Fragment(){
         }
         return imgRes
     }
-
-
-
 
 }
