@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
@@ -82,6 +83,18 @@ class MainFragment : Fragment(){
         setupHourlyForecastRecyvlerView()
         setupDailyForecastRecyvlerView()
         observeData()
+        binding.refreshBtn.setOnClickListener {
+            it.animate().rotation(360f).start()
+            showProgressBars()
+            viewModel.getCurrentWeather()
+        }
+    }
+
+    private fun showProgressBars() {
+        binding.tempPb.visibility = VISIBLE
+        binding.dailyRvPb.visibility = VISIBLE
+        binding.hourlyRvPb.visibility = VISIBLE
+        observeData()
     }
 
     private fun setupHourlyForecastRecyvlerView() {
@@ -108,6 +121,7 @@ class MainFragment : Fragment(){
             binding.tempPb.visibility = GONE
             binding.dailyRvPb.visibility = GONE
             binding.hourlyRvPb.visibility = GONE
+            binding.refreshBtn.visibility = VISIBLE
             binding.apply {
                 setBackImg(
                     weather.current.weather[0].main,

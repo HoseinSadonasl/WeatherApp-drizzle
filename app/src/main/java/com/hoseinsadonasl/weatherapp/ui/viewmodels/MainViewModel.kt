@@ -3,8 +3,7 @@ package com.hoseinsadonasl.weatherapp.ui.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hoseinsadonasl.weatherapp.models.Daily
-import com.hoseinsadonasl.weatherapp.models.Weather
+import com.hoseinsadonasl.weatherapp.models.onecall.Weather
 import com.hoseinsadonasl.weatherapp.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -25,32 +24,17 @@ class MainViewModel @Inject constructor(
     val weather: LiveData<Weather>
         get() = _weather
 
-    private var _dailyWeather = MutableLiveData<List<Daily>>()
-    val dailyWeather: LiveData<List<Daily>>
-        get() = _dailyWeather
-
     val currentTimeInMillis = currentTimeI
 
     init {
         getCurrentWeather()
-        getDailyWeather()
     }
 
-    private fun getCurrentWeather() {
+    fun getCurrentWeather() {
         CoroutineScope(IO).launch {
             delay(5000)
             repository.getWeather().collect {
                 _weather.postValue(it.body())
-            }
-        }
-    }
-
-
-    private fun getDailyWeather() {
-        CoroutineScope(IO).launch {
-            delay(5000)
-            repository.getWeather().collect {
-                _dailyWeather.postValue(it.body()?.daily)
             }
         }
     }

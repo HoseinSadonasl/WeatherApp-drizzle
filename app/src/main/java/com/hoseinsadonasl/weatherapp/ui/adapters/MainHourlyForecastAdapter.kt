@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hoseinsadonasl.weatherapp.databinding.LayoutHourlyForcastRvItemBinding
 import com.hoseinsadonasl.weatherapp.formatTime
-import com.hoseinsadonasl.weatherapp.models.Hourly
+import com.hoseinsadonasl.weatherapp.models.onecall.Hourly
 
 class MainHourlyForecastAdapter :
     ListAdapter<Hourly, MainHourlyForecastAdapter.ViewHolder>(HourlyAdapterDiffUtilCallBack) {

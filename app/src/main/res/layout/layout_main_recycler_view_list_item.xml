@@ -6,7 +6,7 @@
 
         <variable
             name="recyclerViewValues"
-            type="com.hoseinsadonasl.weatherapp.models.Daily" />
+            type="com.hoseinsadonasl.weatherapp.models.onecall.Daily" />
 
     </data>
 

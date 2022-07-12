@@ -372,7 +372,7 @@
             tools:text="TextView" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button"
+            android:id="@+id/refresh_btn"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -381,7 +381,10 @@
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
+            android:visibility="invisible"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:icon="@drawable/ic_baseline_refresh_24"
+            android:translationZ="1dp"
             app:iconGravity="textEnd"
             app:iconPadding="0dp"
             app:iconTint="@color/white"

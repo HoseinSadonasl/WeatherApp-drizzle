@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hoseinsadonasl.weatherapp.databinding.LayoutMainRecyclerViewListItemBinding
 import com.hoseinsadonasl.weatherapp.formatDailyAdapterTime
-import com.hoseinsadonasl.weatherapp.models.Daily
+import com.hoseinsadonasl.weatherapp.models.onecall.Daily
 
 class MainDailyForecastAdapter :
     ListAdapter<Daily, MainDailyForecastAdapter.ViewHolder>(DailyAdapterDiffUtilCallBack) {
