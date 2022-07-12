@@ -1,4 +1,4 @@
-# WeatherApp-drizzle
+# WeatherApp-drizzle (MVVM)
 WeatherApp
 
 Drizzle
