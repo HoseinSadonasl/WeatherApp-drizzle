@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="searchTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/mtrl_textinput_default_box_stroke_color</item>
+        <item name="hintAnimationEnabled">false</item>
+        <item name="counterTextColor">@color/mtrl_textinput_default_box_stroke_color</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="android:paddingStart" tools:ignore="NewApi">2dp</item>
+        <item name="android:paddingEnd" tools:ignore="NewApi">2dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+
+</resources>

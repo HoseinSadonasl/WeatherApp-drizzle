@@ -1,5 +1,6 @@
 package com.hoseinsadonasl.weatherapp.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -21,11 +22,13 @@ class MainDailyForecastAdapter :
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.dateTv.text = formatDailyAdapterTime(getItem(position).dt.toInt().toLong())
         holder.binding.statusTv.text = getItem(position).weather[0].description
         holder.binding.tempTv.text =
-            ((getItem(position).temp.max.toInt() - 273).toString()) + "°/" + ((getItem(position).temp.min.toInt() - 273).toString()) + "°"
+            ((getItem(position).temp.max.toInt() - 273).toString()) +
+                    "°/" + ((getItem(position).temp.min.toInt() - 273).toString()) + "°"
         holder.binding.executePendingBindings()
     }
 

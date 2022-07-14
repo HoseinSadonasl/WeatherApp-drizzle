@@ -1,5 +1,6 @@
 package com.hoseinsadonasl.weatherapp.ui.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -21,6 +22,7 @@ class MainHourlyForecastAdapter :
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.tempTv.text = (getItem(position).temp.toInt() - 273).toString() + "°"
         holder.binding.statusTv.text = getItem(position).weather[0].description

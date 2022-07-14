@@ -1,13 +1,12 @@
 package com.hoseinsadonasl.weatherapp.ui.fragments
 
-import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -18,25 +17,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.hoseinsadonasl.weatherapp.R
 import com.hoseinsadonasl.weatherapp.databinding.LayoutFragmentMainBinding
-import com.hoseinsadonasl.weatherapp.other.Constants.REQUEST_CODE_LOCATION_PERMISSION
-import com.hoseinsadonasl.weatherapp.other.LocationUtility
 import com.hoseinsadonasl.weatherapp.ui.adapters.MainDailyForecastAdapter
 import com.hoseinsadonasl.weatherapp.ui.adapters.MainHourlyForecastAdapter
 import com.hoseinsadonasl.weatherapp.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
 class MainFragment : Fragment(){
-
-    private lateinit var binding: LayoutFragmentMainBinding
 
     @Inject
     @Named("MainDailyForecastAdapter")
@@ -50,19 +43,31 @@ class MainFragment : Fragment(){
     @Named("glideProvider")
     lateinit var glide: RequestManager
 
+    private lateinit var binding: LayoutFragmentMainBinding
+    private var finishActivity = false
     private val viewModel: MainViewModel by viewModels()
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                requireActivity().finishAffinity()
+                binding.cityNameEt.let {
+                    if (it.isFocused) {
+                        it.text?.clear()
+                    }
+                }
+                Toast.makeText(requireContext(), "Press back again to close drizzle", Toast.LENGTH_SHORT).show()
+                CoroutineScope(Main).launch {
+                    finishActivity = true
+                    delay(1500)
+                    finishActivity = false
+                }
+                if (finishActivity) {
+                    requireActivity().finishAffinity()
+                }
             }
         })
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +80,17 @@ class MainFragment : Fragment(){
             container,
             false
         )
+        binding.refreshBtn.setOnClickListener {
+            it.animate().rotation(360f).start()
+            showProgressBars()
+            viewModel.getCurrentWeather()
+        }
+
+        binding.cityNameTextInputLayout.let {
+            it.setEndIconOnClickListener {
+                viewModel.getCurrentWeatherByCityName(binding.cityNameEt.text.toString())
+            }
+        }
         return binding.root
     }
 
@@ -83,11 +99,6 @@ class MainFragment : Fragment(){
         setupHourlyForecastRecyvlerView()
         setupDailyForecastRecyvlerView()
         observeData()
-        binding.refreshBtn.setOnClickListener {
-            it.animate().rotation(360f).start()
-            showProgressBars()
-            viewModel.getCurrentWeather()
-        }
     }
 
     private fun showProgressBars() {
@@ -110,7 +121,6 @@ class MainFragment : Fragment(){
                 .apply {
                     binding.daysRv.addItemDecoration(this)
                     this.setDrawable(div!!)
-
                 }
             recyclerView.adapter = dailyForecastAdapter
         }
@@ -118,20 +128,22 @@ class MainFragment : Fragment(){
 
     private fun observeData() {
         viewModel.weather.observe(viewLifecycleOwner) { weather ->
-            binding.tempPb.visibility = GONE
-            binding.dailyRvPb.visibility = GONE
-            binding.hourlyRvPb.visibility = GONE
-            binding.refreshBtn.visibility = VISIBLE
             binding.apply {
+                tempPb.visibility = GONE
+                dailyRvPb.visibility = GONE
+                hourlyRvPb.visibility = GONE
+                refreshBtn.visibility = VISIBLE
+
                 setBackImg(
                     weather.current.weather[0].main,
                     weather.current.sunset,
                     weather.current.sunrise
                 )
+
                 tempTv.text = ((weather.current.temp.toInt() - 273).toString() + "°")
                 tempMaxMinTv.text = "Max/Min: " +
-                    ((weather.daily.get(0).temp.max.toInt() - 273).toString() + "°/" +
-                            (weather.daily.get(0).temp.min.toInt() - 273).toString() + "°")
+                        ((weather.daily.get(0).temp.max.toInt() - 273).toString() + "°/" +
+                                (weather.daily.get(0).temp.min.toInt() - 273).toString() + "°")
                 locationNameTv.text = weather.timezone.substringAfter("/")
                 uvTv.text = "UV Index: " + weather.current.uvi.toString()
                 humidityTv.text = "Humidity: " + weather.current.humidity.toInt().toString() + "%"
@@ -148,34 +160,35 @@ class MainFragment : Fragment(){
     }
 
     private fun setBackImg(status: String, sunset: Double, sunrise: Double) {
-        val currentTimeInMillis = viewModel.currentTimeInMillis
-        val imageUrl: String = imageUrl(status, currentTimeInMillis, sunset, sunrise)
+        val currentTimeInMillis = viewModel.currentTimestamp
+        val imageUrl: String =
+            imageUrl(status, currentTimeInMillis, sunset.toLong(), sunrise.toLong())
         glide.load(imageUrl).into(binding.weatherImg)
     }
 
     fun imageUrl(
         status: String,
-        currentTimeInMillis: Long,
-        sunset: Double,
-        sunrise: Double
+        currentTimestamp: Long,
+        sunset: Long,
+        sunrise: Long
     ): String {
         val imgRes: String
         when (status) {
             "Thunderstorm" -> imgRes = getString(R.string.thunderandlightning)
             "Drizzle" -> imgRes = getString(R.string.drizzle)
             "Rain" -> {
-                if (currentTimeInMillis >= sunset.toLong() * 1000 && currentTimeInMillis <= sunrise.toLong() * 1000) {
-                    imgRes = getString(R.string.rainynight)
-                } else {
+                if (currentTimestamp in sunset..sunrise) {
                     imgRes = getString(R.string.rainy)
+                } else {
+                    imgRes = getString(R.string.rainynight)
                 }
             }
             "Snow" -> imgRes = getString(R.string.snow)
             "Clear" -> {
-                if (currentTimeInMillis >= sunset.toLong() * 1000 && currentTimeInMillis <= sunrise.toLong() * 1000) {
-                    imgRes = getString(R.string.night)
-                } else {
+                if (currentTimestamp in sunset..sunrise) {
                     imgRes = getString(R.string.sunny)
+                } else {
+                    imgRes = getString(R.string.night)
                 }
             }
             "Clouds" -> imgRes = getString(R.string.clouds)
@@ -184,5 +197,4 @@ class MainFragment : Fragment(){
         }
         return imgRes
     }
-
 }

@@ -1,6 +1,5 @@
 package com.hoseinsadonasl.weatherapp.repository
 
-import android.location.Location
 import android.util.Log
 import com.hoseinsadonasl.weatherapp.network.WeatherApi
 import kotlinx.coroutines.flow.flow
@@ -13,26 +12,23 @@ class MainRepository @Inject constructor(
     @Named("exclude") private val exclude: String
 ) {
 
-    suspend fun getWeather() = flow {
+    suspend fun getWeather(lat: String?, lon: String?) = flow {
         try {
             emit(
                 weatherApi.getWeather(
-                    lat = location[0].toString(),
-                    lon = location[1].toString(),
+                    lat = if (lat.isNullOrEmpty()) location[0].toString() else lat,
+                    lon = if (lon.isNullOrEmpty()) location[0].toString() else lon,
                     exclude = exclude
                 )
             )
-            Log.e(
-                "GetWeather==", "getWeather: ${
-                    emit(
-                        weatherApi.getWeather(
-                            lat = location[0].toString(),
-                            lon = location[1].toString(),
-                            exclude = exclude
-                        )
-                    )
-                }"
-            )
+        } catch (e: Exception) {
+            Log.e("GetWeather", "getWeather: ${e.message}")
+        }
+    }
+
+    suspend fun getCurrentWeatherByCityName(cityName: String) = flow {
+        try {
+            emit(weatherApi.getWeatherUsingCityName(cityName))
         } catch (e: Exception) {
             Log.e("GetWeather", "getWeather: ${e.message}")
         }

@@ -25,9 +25,6 @@ import javax.inject.Inject
 
 class SplashFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
-    @Inject
-    lateinit var toast : Toast
-
     lateinit var binding: SplashFragmentLayoutBinding
 
     override fun onCreateView(

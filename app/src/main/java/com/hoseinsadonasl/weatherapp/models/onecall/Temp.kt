@@ -1,4 +1,4 @@
-package com.hoseinsadonasl.weatherapp.models
+package com.hoseinsadonasl.weatherapp.models.onecall
 
 data class Temp(
     val day: Double,

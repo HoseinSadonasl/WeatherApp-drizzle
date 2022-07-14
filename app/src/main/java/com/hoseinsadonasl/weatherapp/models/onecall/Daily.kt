@@ -1,18 +1,22 @@
-package com.hoseinsadonasl.weatherapp.models
+package com.hoseinsadonasl.weatherapp.models.onecall
 
-data class Current(
+data class Daily(
     val clouds: Double,
     val dew_poDouble: Double,
     val dt: Double,
-    val feels_like: Double,
+    val feels_like: FeelsLike,
     val humidity: Double,
+    val moon_phase: Double,
+    val moonrise: Double,
+    val moonset: Double,
+    val pop: Double,
     val pressure: Double,
+    val rain: Double,
     val sunrise: Double,
     val sunset: Double,
-    val temp: Double,
+    val temp: Temp,
     val uvi: Double,
-    val visibility: Double,
-    val weather: List<WeatherX>,
+    val weather: List<WeatherXX>,
     val wind_deg: Double,
     val wind_gust: Double,
     val wind_speed: Double
