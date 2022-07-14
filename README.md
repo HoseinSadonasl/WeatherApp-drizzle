@@ -1,6 +1,5 @@
 # WeatherApp-drizzle (MVVM)
 # Drizzle
-![alt text](https://raw.githubusercontent.com/HoseinSadonasl/WeatherApp-drizzle/master/Screenshots/Screenshot_1657838468.png)
 A weather app 
 
 # Screenshot
