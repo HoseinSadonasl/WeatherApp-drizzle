@@ -2,17 +2,14 @@ package com.hoseinsadonasl.weatherapp.ui.fragments
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.hoseinsadonasl.weatherapp.R
-import com.hoseinsadonasl.weatherapp.databinding.SplashFragmentLayoutBinding
+import com.hoseinsadonasl.weatherapp.databinding.LayoutSplashFragmentBinding
 import com.hoseinsadonasl.weatherapp.other.Constants
 import com.hoseinsadonasl.weatherapp.other.LocationUtility
 import kotlinx.coroutines.CoroutineScope
@@ -21,20 +18,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
-import javax.inject.Inject
 
 class SplashFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
-    lateinit var binding: SplashFragmentLayoutBinding
+    private lateinit var binding: LayoutSplashFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.splash_fragment_layout,
+            R.layout.layout_splash_fragment,
             container,
             false
         )
@@ -51,7 +47,7 @@ class SplashFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         }
         EasyPermissions.requestPermissions(
             this,
-            "Accept location permission to use the app. If you don't do it, it will be closed",
+            "Accept location permission to use drizzle. If you don't do it, it will be closed",
             Constants.REQUEST_CODE_LOCATION_PERMISSION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -80,7 +76,7 @@ class SplashFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         navigateToMainFragment()
     }
 
-    fun navigateToMainFragment() = CoroutineScope(Dispatchers.Main).launch {
+    private fun navigateToMainFragment() = CoroutineScope(Dispatchers.Main).launch {
         delay(3000)
         findNavController().navigate(R.id.action_splashFragment_to_mainFragment)
     }

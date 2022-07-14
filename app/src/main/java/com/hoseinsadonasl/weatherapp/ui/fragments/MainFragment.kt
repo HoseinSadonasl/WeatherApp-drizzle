@@ -96,8 +96,8 @@ class MainFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupHourlyForecastRecyvlerView()
-        setupDailyForecastRecyvlerView()
+        setupHourlyForecastRecyclerView()
+        setupDailyForecastRecyclerView()
         observeData()
     }
 
@@ -108,13 +108,11 @@ class MainFragment : Fragment(){
         observeData()
     }
 
-    private fun setupHourlyForecastRecyvlerView() {
-        binding.hourlyRv.let { recyclerView ->
-            recyclerView.adapter = hourlyForecastAdapter
-        }
+    private fun setupHourlyForecastRecyclerView() {
+        binding.hourlyRv.adapter = hourlyForecastAdapter
     }
 
-    private fun setupDailyForecastRecyvlerView() {
+    private fun setupDailyForecastRecyclerView() {
         val div = ContextCompat.getDrawable(requireContext(), R.drawable.divider_rv)
         binding.daysRv.let { recyclerView ->
             DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
@@ -142,8 +140,8 @@ class MainFragment : Fragment(){
 
                 tempTv.text = ((weather.current.temp.toInt() - 273).toString() + "°")
                 tempMaxMinTv.text = "Max/Min: " +
-                        ((weather.daily.get(0).temp.max.toInt() - 273).toString() + "°/" +
-                                (weather.daily.get(0).temp.min.toInt() - 273).toString() + "°")
+                        ((weather.daily[0].temp.max.toInt() - 273).toString() + "°/" +
+                                (weather.daily[0].temp.min.toInt() - 273).toString() + "°")
                 locationNameTv.text = weather.timezone.substringAfter("/")
                 uvTv.text = "UV Index: " + weather.current.uvi.toString()
                 humidityTv.text = "Humidity: " + weather.current.humidity.toInt().toString() + "%"
@@ -166,7 +164,7 @@ class MainFragment : Fragment(){
         glide.load(imageUrl).into(binding.weatherImg)
     }
 
-    fun imageUrl(
+    private fun imageUrl(
         status: String,
         currentTimestamp: Long,
         sunset: Long,
@@ -177,18 +175,18 @@ class MainFragment : Fragment(){
             "Thunderstorm" -> imgRes = getString(R.string.thunderandlightning)
             "Drizzle" -> imgRes = getString(R.string.drizzle)
             "Rain" -> {
-                if (currentTimestamp in sunset..sunrise) {
-                    imgRes = getString(R.string.rainy)
+                imgRes = if (currentTimestamp in sunset..sunrise) {
+                    getString(R.string.rainy)
                 } else {
-                    imgRes = getString(R.string.rainynight)
+                    getString(R.string.rainynight)
                 }
             }
             "Snow" -> imgRes = getString(R.string.snow)
             "Clear" -> {
-                if (currentTimestamp in sunset..sunrise) {
-                    imgRes = getString(R.string.sunny)
+                imgRes = if (currentTimestamp in sunset..sunrise) {
+                    getString(R.string.sunny)
                 } else {
-                    imgRes = getString(R.string.night)
+                    getString(R.string.night)
                 }
             }
             "Clouds" -> imgRes = getString(R.string.clouds)

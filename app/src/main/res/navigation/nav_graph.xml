@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -18,7 +18,7 @@
         android:id="@+id/splashFragment"
         android:name="com.hoseinsadonasl.weatherapp.ui.fragments.SplashFragment"
         android:label="SplashFragment"
-        tools:layout="@layout/splash_fragment_layout">
+        tools:layout="@layout/layout_splash_fragment">
         <action
             android:id="@+id/action_splashFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

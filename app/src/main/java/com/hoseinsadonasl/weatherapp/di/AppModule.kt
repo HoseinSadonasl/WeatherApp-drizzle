@@ -1,10 +1,8 @@
 package com.hoseinsadonasl.weatherapp.di
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.LocationManager
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.hoseinsadonasl.weatherapp.other.LocationUtility
 import com.hoseinsadonasl.weatherapp.ui.adapters.MainDailyForecastAdapter

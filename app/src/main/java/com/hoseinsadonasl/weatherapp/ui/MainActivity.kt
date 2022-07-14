@@ -12,7 +12,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val TAG = "MainActivity"
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
