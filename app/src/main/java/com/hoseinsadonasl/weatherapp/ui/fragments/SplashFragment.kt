@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.hoseinsadonasl.weatherapp.Constants
+import com.hoseinsadonasl.weatherapp.LocationUtility
 import com.hoseinsadonasl.weatherapp.R
 import com.hoseinsadonasl.weatherapp.databinding.LayoutSplashFragmentBinding
-import com.hoseinsadonasl.weatherapp.other.Constants
-import com.hoseinsadonasl.weatherapp.other.LocationUtility
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

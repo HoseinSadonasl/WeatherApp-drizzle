@@ -1,10 +1,10 @@
 package com.hoseinsadonasl.weatherapp.di
 
+import com.hoseinsadonasl.weatherapp.Constants.API_KEY
+import com.hoseinsadonasl.weatherapp.Constants.BASE_URL
 import com.hoseinsadonasl.weatherapp.network.ApiHelper
 import com.hoseinsadonasl.weatherapp.network.ApiImpl
 import com.hoseinsadonasl.weatherapp.network.WeatherApi
-import com.hoseinsadonasl.weatherapp.other.Constants.API_KEY
-import com.hoseinsadonasl.weatherapp.other.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

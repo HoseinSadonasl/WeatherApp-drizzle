@@ -12,7 +12,7 @@ class MainRepository @Inject constructor(
     @Named("exclude") private val exclude: String
 ) {
 
-    suspend fun getWeather(lat: String?, lon: String?) = flow {
+    fun getWeather(lat: String?, lon: String?) = flow {
         try {
             emit(
                 weatherApi.getWeather(
@@ -26,7 +26,7 @@ class MainRepository @Inject constructor(
         }
     }
 
-    suspend fun getCurrentWeatherByCityName(cityName: String) = flow {
+    fun getCurrentWeatherByCityName(cityName: String) = flow {
         try {
             emit(weatherApi.getWeatherUsingCityName(cityName))
         } catch (e: Exception) {

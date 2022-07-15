@@ -1,8 +1,8 @@
 package com.hoseinsadonasl.weatherapp.network
 
+import com.hoseinsadonasl.weatherapp.Constants.API_KEY
 import com.hoseinsadonasl.weatherapp.models.current.CurrentWeather
 import com.hoseinsadonasl.weatherapp.models.onecall.Weather
-import com.hoseinsadonasl.weatherapp.other.Constants.API_KEY
 import retrofit2.Response
 import retrofit2.http.*
 import javax.inject.Named

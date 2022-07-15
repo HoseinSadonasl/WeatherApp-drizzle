@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.LocationManager
 import com.bumptech.glide.Glide
-import com.hoseinsadonasl.weatherapp.other.LocationUtility
+import com.hoseinsadonasl.weatherapp.LocationUtility
 import com.hoseinsadonasl.weatherapp.ui.adapters.MainDailyForecastAdapter
 import com.hoseinsadonasl.weatherapp.ui.adapters.MainHourlyForecastAdapter
 import dagger.Module
